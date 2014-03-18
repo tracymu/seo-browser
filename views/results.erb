@@ -1,8 +1,58 @@
-<h1>This is the results page</h1>
 
-<p>URL: <%= @url.content %><p>
-<p>Title: <%= @title %></p>
-<p>H1: <%= @h1 %></p>
-<p>H2: <%= @h2 %></p>
+<p><strong>URL:</strong> <%= @url.content %><p>
+<p><strong>Title:</strong> <%= @title %></p>
+<p><strong>Number of Links:</strong> <%= @total_links %></p>
+<p><strong>Number of External Links:</strong> <%= @total_external_links %></p>
+
+<h1>H1's</h1>
+<ul>
+<% @h1_array.each do |h1| %>
+<li> <%= h1.text %></li>
+<% end %>
+</ul>
+<h2>H2's</h2>
+<ul>
+<% @h2_array.each do |h2| %>
+<li> <%= h2.text %></li>
+<% end %>
+</ul>
+<h3>H3's</h3>
+<ul>
+<% @h3_array.each do |h3| %>
+<li> <%= h3.text %></li>
+<% end %>
+</ul>
+<h3>H4's</h3>
+<ul>
+<% @h4_array.each do |h4| %>
+<li> <%= h4.text %></li>
+<% end %>
+</ul>
+<h3>H5's</h3>
+<ul>
+<% @h5_array.each do |h5| %>
+<li> <%= h5.text %></li>
+<% end %>
+</ul>
+<h3>H6's</h3>
+<ul>
+<% @h6_array.each do |h6| %>
+<li> <%= h6.text %></li>
+<% end %>
+</ul>
+
+<h3>All Links</h3>
+<ul>
+<% @links.each do |link| %>
+<li> <%= link["href"] %></li>
+<% end %>
+</ul>
+
+
+
+
+
+
+
 
 
