@@ -1,8 +1,19 @@
+<!-- Need to make it say something if there is no meta title -->
 
-<p><strong>URL:</strong> <%= @url.content %><p>
-<p><strong>Title:</strong> <%= @title %></p>
+
+<strong>URL:</strong> <a href = "<%= @url.content %>"><%= @url.content %></a>
+<h2>How It Looks In Google</h2>
+<div border: 0;
+margin: 0;
+padding: 0 8px; >
+<p><a style ="font-weight: bold;
+font-style: normal; white-space: nowrap; font-size: medium;color: #1e0fbe; font-family:arial, sans-serif; text-decoration: none;" href="<%= @url.content %>"><%= @title[0..56] %>...</span><br>
+<a style = "color: #006621; font-size: 13px;font-style: normal;line-height: 16px; text-decoration: none;" href = "<%= @url.content %>"><%= @url.content %></a><br>
+<span style="color: #545454; line-height: 1.4; font-size: small;
+font-family: arial,sans-serif;" word-wrap: break-word; ><%= @content[0..155] %> </span></p>
+
 <p><strong>Number of Links:</strong> <%= @total_links %></p>
-<p><strong>Number of External Links:</strong> <%= @total_external_links %></p>
+<p><strong>Number of External Links:</strong> <%= @total_external_links %></div>
 
 <h1>H1's</h1>
 <ul>
