@@ -1,14 +1,8 @@
-#NEXT THING TO DO IS TO MAKE THE DOMAIN A THING SO THAT WE CAN
-# EXCLUDE INTERNAL LINKS - LOOK AT THE NEW GEM I INSTALLED AND THE METHOD I MADE
-
-# ALSO NEED TO FIGURE OUT WHY GETTING THE EXTERNAL LINKS NOT WORKING FOR MOOMU VISION DIRECT. ETC.
-
 
 require 'Nokogiri'
 require 'open-uri'
 require 'sinatra'
 require 'data_mapper'
-require 'uri/http'
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/main.db")
 
@@ -78,13 +72,7 @@ def UrlScrape
   @link_list.each do |link|
     if link.include? @domain
       @internal_links << link
-    elsif link.start_with? "#"
-      @internal_links << link
-    elsif link.start_with? "/"
-      @internal_links << link
-    elsif link.include? "javascript"
-      @internal_links << link
-    else
+    elsif link.start_with? "http"
       @external_links << link
     end
   end
@@ -95,63 +83,27 @@ end
 
 
 
-# I want to use this method below to make it so that people can enter wierd URLs in and it will figure it out O
-# Or should I just use validations?
-# I was also thinking knowing the domain would help exclude internal links
-
-# def DomainName(url)
-#   uri = URI.parse(url)
-#   domain = PublicSuffix.parse(uri.host).domain
-# end
-
-
-
 
 
 ###### NOTES AND QUESTIONS ####################
 
 # Design Patterns for Sinatra apps- how to lay this out better - sinatra chassis
 
+# Need to remember to make sure it takes http:// if not, add it on. i.e validating URL entries
 
-# Use this to see about improving the way you get the links http://stackoverflow.com/questions/856706/extract-links-urls-with-nokogiri-in-ruby-from-a-href-html-tags
-
-# then if you do a while loop to print them, you can use an if statement to skip over the ones you dont' want?
-
-# Do we need a database? I think maybe I don't need a database
-
-# Need to remember to make sure it takes http:// if not, add it on.
+# going to use Javascript to acordion up the entries
 
 # How to be able to press enteri nstead of  have to click submit
 
-
-# Obviously the file should probably not be set out like this.
-
-# Make an array of all the things you don't want to include, like #, javascript, @url.content
-
-# to get just the domain name, it must be something like if starts with http:// strip it off
-# then if it starts with www. strip that off too.
+# How to make it so the cursor is already in the box when you land on the page
 
 # no follows
-
-# internal links (i.e. where the link doesn't start with / or url)
-
-# limit title characters to what Google sees
-
-# Same as description
 
 # Format like Google snippet
 
 # canonical tag checker-
 
-# How to get meta description out
 # Why aren't the params in the URL, and so I can just refresh?
 
-# need to make it so that .includ? @url.content is just the domain, not www. or http:, so that
-# it can include subdomains
-
-# Links to exclude are like this:
- # links_that_start_with = ['/','#',]
-  # links_that_include = [@domain, 'javascript', 'void']
-
-  # What happens if there is nothing at that page?
+# What happens if there is nothing at that page?
 
