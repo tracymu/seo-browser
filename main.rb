@@ -42,22 +42,36 @@ def UrlScrape
   doc = Nokogiri::HTML(open(@url.content))
 
   @h1_array = doc.css('h1')
+  @h1_num = @h1_array.length
   @h2_array = doc.css('h2')
+  @h2_num = @h2_array.length
   @h3_array = doc.css('h3')
+  @h3_num = @h3_array.length
   @h4_array = doc.css('h4')
+  @h4_num = @h4_array.length
   @h5_array = doc.css('h5')
+  @h5_num = @h5_array.length
   @h6_array = doc.css('h6')
+  @h6_num = @h6_array.length
+
+
+
+  if doc.at_css("link[rel='canonical']")
+    @canonical = doc.at_css("link[rel='canonical']")['href']
+  else
+    @canonical = "There is no canonical tag on this page"
+  end
 
   @title = doc.at_css("title").text
-  meta_desc = doc.css("meta[name='description']").first
 
+  meta_desc = doc.css("meta[name='description']").first
   if meta_desc
     @content = meta_desc['content']
   else
     @content = "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long"
   end
 
-  @body = doc.css("body")
+  # @body = doc.css("body")
   @links = doc.css("a")
   @link_list = @links.map { |link| link['href']}
   @total_links = @links.length
@@ -91,7 +105,7 @@ end
 
 # Need to remember to make sure it takes http:// if not, add it on. i.e validating URL entries
 
-# going to use Javascript to acordion up the entries
+# going to use Javascript to acordion up the entries http://jqueryui.com/accordion/ ?
 
 # How to be able to press enteri nstead of  have to click submit
 
@@ -106,4 +120,11 @@ end
 # Why aren't the params in the URL, and so I can just refresh?
 
 # What happens if there is nothing at that page?
+
+# For example with Twitte,r it does some https redirect and breaks the whole thing,
+
+# If there is no web page there -do what?
+# If there is no title? then what?
+
+#  What happens on a page like this with no data to take? http://tracecode.com.au/css-projects/google/google-html.html
 
