@@ -37,10 +37,11 @@ get '/results' do
   erb:results
 end
 
+
+
+
 def UrlScrape
-
   doc = Nokogiri::HTML(open(@url.content))
-
   @h1_array = doc.css('h1')
   @h1_num = @h1_array.length
   @h2_array = doc.css('h2')
@@ -113,7 +114,11 @@ end
 
 # no follows
 
+#  how to make a generic "This didn't work " page? for if page no good, or url wierd?
+
 # Format like Google snippet
+
+# Take all css inline and put in separate file
 
 # canonical tag checker-
 
@@ -123,8 +128,11 @@ end
 
 # For example with Twitte,r it does some https redirect and breaks the whole thing,
 
+# I think maybe in bootstrap there is something which makes me enter http in the url box?
+# because I specified url?
+# however, if the url is weird or dodge, it will break. How do I show them "Sorry, this is not a valid url" flash message?
+
 # If there is no web page there -do what?
 # If there is no title? then what?
 
-#  What happens on a page like this with no data to take? http://tracecode.com.au/css-projects/google/google-html.html
-
+# Something about injections of dodgy html? http://code.tutsplus.com/tutorials/singing-with-sinatra-the-encore--net-19364
