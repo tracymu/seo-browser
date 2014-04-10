@@ -1,22 +1,26 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf8">
-  <title>Make this some kind of SEO title</title>
-</head>
-<body>
-  <header>
-    <hgroup>
-      <h1><a href="/">Page Markup</a></h1>
-    </hgroup>
-  </header>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SEO Page Markup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
 
-  <div id="main">
-    <%= yield %>
-  </div>
+  <body>
+    <header>
+      <hgroup>
+        <h1><a href="/">Page Markup</a></h1>
+      </hgroup>
+    </header>
 
-  <footer>
-    <p><small></a>.</small></p>
-  </footer>
-</body>
-</html>
+    <div>
+      <%= yield %>
+    </div>
+
+    <footer>
+      <p><small></a>.</small></p>
+    </footer>
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
