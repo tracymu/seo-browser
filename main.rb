@@ -104,10 +104,6 @@ end
 
 # Design Patterns for Sinatra apps- how to lay this out better - sinatra chassis
 
-# Need to remember to make sure it takes http:// if not, add it on. i.e validating URL entries
-
-# going to use Javascript to acordion up the entries http://jqueryui.com/accordion/ ?
-
 # How to be able to press enteri nstead of  have to click submit
 
 # How to make it so the cursor is already in the box when you land on the page
@@ -116,12 +112,9 @@ end
 
 #  how to make a generic "This didn't work " page? for if page no good, or url wierd?
 
-# Format like Google snippet
-
 # Take all css inline and put in separate file
 
-# canonical tag checker-
-
+#at some point consider whether the chevron can go up and down http://stackoverflow.com/questions/13778703/adding-open-closed-icon-to-twitter-bootstrap-collapsibles-accordions
 # Why aren't the params in the URL, and so I can just refresh?
 
 # What happens if there is nothing at that page?
