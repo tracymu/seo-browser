@@ -8,68 +8,143 @@ font-style: normal; white-space: nowrap; font-size: medium;color: #1e0fbe; font-
 font-family: arial,sans-serif;" word-wrap: break-word; ><%= @content[0..155] %> </span></p>
 
 </div>
-<p><strong>This page canonicals to: </strong> <%= @canonical %></p>
-<p><strong>Number of Links:</strong> <%= @total_links %></p>
-<p><strong>Number of External Links:</strong> <%= @total_external_links %></p>
+<p><strong>Canonical Link: </strong> <%= @canonical %></p>
 
-<h1>External links</h1>
-<ul>
-	<% @external_links.each do |link| %>
-		<li><%= link %></li>
-	<% end %>
-</ul>
+<div class="accordion" id="accordion2">
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight">
+				<h1>Links on Page (<%= @total_links %>)</h1>
+			</a>
+		</div>
+		<div id="collapseEight" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<ul>
+					<% @link_list.each do |link| %>
+						<li><%= link %></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+				<h1>External links (<%= @total_external_links %>)</h1>
+			</a>
+		</div>
+		<div id="collapseOne" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<ul>
+					<% @external_links.each do |link| %>
+						<li><%= link %></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<% unless @h1_array.empty? %>
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><h1>H1's (<%= @h1_num %>)</h1>
+				</a>
+		</div>
+		<div id="collapseTwo" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<ul>
+					<% @h1_array.each do |h1| %>
+						<li> <%= h1.text %></li>
+					<% end %>
+				</ul>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<% unless @h2_array.empty? %>
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree"><h1>H2's (<%= @h2_num %>)</h1>
+				</a>
+		</div>
+		<div id="collapseThree" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<ul>
+					<% @h2_array.each do |h2| %>
+						<li> <%= h2.text %></li>
+					<% end %>
+				</ul>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<% unless @h3_array.empty? %>
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour"><h1>H3's (<%= @h3_num %>)</h1>
+				</a>
+		</div>
+		<div id="collapseFour" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<ul>
+					<% @h3_array.each do |h3| %>
+						<li> <%= h3.text %></li>
+					<% end %>
+				</ul>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<% unless @h4_array.empty? %>
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive"><h1>H4's (<%= @h4_num %>)</h1>
+				</a>
+		</div>
+		<div id="collapseFive" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<ul>
+					<% @h4_array.each do |h4| %>
+						<li> <%= h4.text %></li>
+					<% end %>
+				</ul>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<% unless @h5_array.empty? %>
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix"><h1>H5's (<%= @h5_num %>)</h1>
+				</a>
+		</div>
+		<div id="collapseSix" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<ul>
+					<% @h5_array.each do |h5| %>
+						<li> <%= h5.text %></li>
+					<% end %>
+				</ul>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<% unless @h6_array.empty? %>
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven"><h1>H6's (<%= @h6_num %>)</h1>
+				</a>
+		</div>
+		<div id="collapseSeven" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<ul>
+					<% @h6_array.each do |h6| %>
+						<li> <%= h6.text %></li>
+					<% end %>
+				</ul>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
 
-<% unless @h1_array.empty? %>
-	<h1>H1's (<%= @h1_num %>)</h1>
-	<ul>
-		<% @h1_array.each do |h1| %>
-			<li> <%= h1.text %></li>
-		<% end %>
-	</ul>
-<% end %>
-
-<% unless @h2_array.empty? %>
-	<h2>H2's (<%= @h2_num %>)</h2>
-	<ul>
-		<% @h2_array.each do |h2| %>
-			<li> <%= h2.text %></li>
-		<% end %>
-	</ul>
-<% end %>
-
-<% unless @h3_array.empty? %>
-	<h3>H3's (<%= @h3_num %>)</h3>
-	<ul>
-		<% @h3_array.each do |h3| %>
-			<li> <%= h3.text %></li>
-		<% end %>
-	</ul>
-<% end %>
-
-<% unless @h4_array.empty? %>
-	<h3>H4's (<%= @h4_num %>)</h3>
-	<ul>
-		<% @h4_array.each do |h4| %>
-			<li> <%= h4.text %></li>
-		<% end %>
-	</ul>
-<% end %>
-
-<% unless @h5_array.empty? %>
-	<h3>H5's (<%= @h5_num %>)</h3>
-	<ul>
-		<% @h5_array.each do |h5| %>
-			<li> <%= h5.text %></li>
-		<% end %>
-	</ul>
-<% end %>
-
-<% unless @h6_array.empty? %>
-	<h3>H6's (<%= @h6_num %>)</h3>
-	<ul>
-		<% @h6_array.each do |h6| %>
-			<li> <%= h6.text %></li>
-		<% end %>
-	</ul>
-<% end %>
 
