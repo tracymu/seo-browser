@@ -2,37 +2,19 @@
 require 'Nokogiri'
 require 'open-uri'
 require 'sinatra'
-require 'data_mapper'
-
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/main.db")
-
-class URL
-  include DataMapper::Resource
-  property :id, Serial
-  property :content, Text, :required => true
-  property :created_at, DateTime
-  property :updated_at, DateTime
-end
-
-DataMapper.finalize.auto_upgrade!
 
 get '/' do
-  @urls = URL.all
   erb :home
 end
 
 post '/' do
-  url = URL.new
-  url.content = params[:content]
-  url.created_at = Time.now
-  url.updated_at = Time.now
-  url.save
+
   redirect '/results'
 end
 
 
 get '/results' do
-  @url=URL.last
+  @url=params[:content]
   UrlScrape()
   erb:results
 end
@@ -41,7 +23,7 @@ end
 
 
 def UrlScrape
-  doc = Nokogiri::HTML(open(@url.content))
+  doc = Nokogiri::HTML(open(@url))
   @h1_array = doc.css('h1')
   @h1_num = @h1_array.length
   @h2_array = doc.css('h2')
@@ -77,7 +59,7 @@ def UrlScrape
   @link_list = @links.map { |link| link['href']}
   @total_links = @links.length
 
-  @domain = @url.content.sub(/^https?\:\/\//, '').sub(/^www./,'')
+  @domain = @url.sub(/^https?\:\/\//, '').sub(/^www./,'')
 
   @external_links = []
   @internal_links =[]
