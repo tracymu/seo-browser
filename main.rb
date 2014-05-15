@@ -8,13 +8,13 @@ get '/' do
 end
 
 post '/results' do
-  @url=params[:content]
-  UrlScrape()
+  @url = params[:url]
+  UrlScrape(@url)
   erb:results
 end
 
-def UrlScrape
-  doc = Nokogiri::HTML(open(@url))
+def UrlScrape(url)
+  doc = Nokogiri::HTML(open(url))
   @h1_array = doc.css('h1')
   @h1_num = @h1_array.length
   @h2_array = doc.css('h2')
@@ -50,7 +50,7 @@ def UrlScrape
   @link_list = @links.map { |link| link['href']}
   @total_links = @links.length
 
-  @domain = @url.sub(/^https?\:\/\//, '').sub(/^www./,'')
+  @domain = url.sub(/^https?\:\/\//, '').sub(/^www./,'')
 
   @external_links = []
   @internal_links =[]
