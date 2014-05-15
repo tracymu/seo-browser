@@ -2,13 +2,6 @@
 require 'Nokogiri'
 require 'open-uri'
 require 'sinatra'
-require 'data_mapper'
-
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/main.db")
-
-
-
-DataMapper.finalize.auto_upgrade!
 
 get '/' do
   erb :home
