@@ -9,11 +9,13 @@ end
 
 post '/results' do
   @url = params[:url]
-  UrlScrape(@url)
+  doc = scrape_page(@url)
   erb:results
 end
 
-def UrlScrape(url)
+private
+
+def scrape_page(url)
   doc = Nokogiri::HTML(open(url))
   @h1_array = doc.css('h1')
   @h1_num = @h1_array.length
