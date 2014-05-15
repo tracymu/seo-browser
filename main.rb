@@ -7,20 +7,11 @@ get '/' do
   erb :home
 end
 
-post '/' do
-
-  redirect '/results'
-end
-
-
-get '/results' do
+post '/results' do
   @url=params[:content]
   UrlScrape()
   erb:results
 end
-
-
-
 
 def UrlScrape
   doc = Nokogiri::HTML(open(@url))
