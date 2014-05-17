@@ -1,26 +1,30 @@
 <p><strong>URL:</strong> <a href = "<%= @url %>"><%= @url %></a></p>
 <h4>How It Looks In Google</h4>
 <div style="width: 512px;">
-<p><a style ="font-weight: bold;
-font-style: normal; white-space: nowrap; font-size: medium;color: #1e0fbe; font-family:arial, sans-serif; text-decoration: none;" href="<%= @url %>"><%= @title[0..56] %>...</span><br>
-<a style = "color: #006621; font-size: 13px;font-style: normal;line-height: 16px; text-decoration: none;" href = "<%= @url %>"><%= @url %></a><br>
-<span style="color: #545454; line-height: 1.4; font-size: small;
-font-family: arial,sans-serif;" word-wrap: break-word; ><%= @content[0..155] %> </span></p>
-
+	<p><a style ="font-weight: bold;
+	font-style: normal; white-space: nowrap; font-size: medium;color: #1e0fbe; font-family:arial, sans-serif; text-decoration: none;" href="<%= @url %>"><%= meta_title[0..56] %>...</a><br>
+	<a style = "color: #006621; font-size: 13px;font-style: normal;line-height: 16px; text-decoration: none;" href = "<%= @url %>"><%= @url %></a><br>
+	<span style="color: #545454; line-height: 1.4; font-size: small;
+	font-family: arial,sans-serif;" word-wrap: break-word; >
+	<% if meta_description %>
+		<%= meta_description[0..155] %>
+	<% else %>
+		<%= "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long" %>
+	<% end %>
+	</span></p>
 </div>
-<p><strong>Canonical Link: </strong> <%= @canonical %></p>
-
+<p><strong>Canonical Link: </strong> <%= canonical_link %></p>
 <div class="accordion" id="accordion2">
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight">
-				<strong>Links on Page (<%= @total_links %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
+				<strong>Links on Page (<%= "FIVE HUNDRESD" %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
 			</a>
 		</div>
 		<div id="collapseEight" class="accordion-body collapse">
 			<div class="accordion-inner">
 				<ul>
-					<% @link_list.each do |link| %>
+					<% links.each do |link| %>
 						<li><%= link %></li>
 					<% end %>
 				</ul>
@@ -30,13 +34,13 @@ font-family: arial,sans-serif;" word-wrap: break-word; ><%= @content[0..155] %> 
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-				<strong>External links (<%= @total_external_links %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
+				<strong>External links (<%= external_links %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
 			</a>
 		</div>
 		<div id="collapseOne" class="accordion-body collapse">
 			<div class="accordion-inner">
 				<ul>
-					<% @external_links.each do |link| %>
+					<% external_links.each do |link| %>
 						<li><%= link %></li>
 					<% end %>
 				</ul>
@@ -45,100 +49,15 @@ font-family: arial,sans-serif;" word-wrap: break-word; ><%= @content[0..155] %> 
 	</div>
 	<div class="accordion-group">
 		<div class="accordion-heading">
-			<% unless @h1_array.empty? %>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><strong>H1's (<%= @h1_num %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
+			<% unless h_tags(1).empty? %>
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><strong>H1's (<%= h_tags(1).length %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
 				</a>
 		</div>
 		<div id="collapseTwo" class="accordion-body collapse">
 			<div class="accordion-inner">
 				<ul>
-					<% @h1_array.each do |h1| %>
-						<li> <%= h1.text %></li>
-					<% end %>
-				</ul>
-				<% end %>
-			</div>
-		</div>
-	</div>
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<% unless @h2_array.empty? %>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree"><strong>H2's (<%= @h2_num %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
-				</a>
-		</div>
-		<div id="collapseThree" class="accordion-body collapse">
-			<div class="accordion-inner">
-				<ul>
-					<% @h2_array.each do |h2| %>
-						<li> <%= h2.text %></li>
-					<% end %>
-				</ul>
-				<% end %>
-			</div>
-		</div>
-	</div>
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<% unless @h3_array.empty? %>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour"><strong>H3's (<%= @h3_num %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
-				</a>
-		</div>
-		<div id="collapseFour" class="accordion-body collapse">
-			<div class="accordion-inner">
-				<ul>
-					<% @h3_array.each do |h3| %>
-						<li> <%= h3.text %></li>
-					<% end %>
-				</ul>
-				<% end %>
-			</div>
-		</div>
-	</div>
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<% unless @h4_array.empty? %>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive"><strong>H4's (<%= @h4_num %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
-				</a>
-		</div>
-		<div id="collapseFive" class="accordion-body collapse">
-			<div class="accordion-inner">
-				<ul>
-					<% @h4_array.each do |h4| %>
-						<li> <%= h4.text %></li>
-					<% end %>
-				</ul>
-				<% end %>
-			</div>
-		</div>
-	</div>
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<% unless @h5_array.empty? %>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix"><strong>H5's (<%= @h5_num %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
-				</a>
-		</div>
-		<div id="collapseSix" class="accordion-body collapse">
-			<div class="accordion-inner">
-				<ul>
-					<% @h5_array.each do |h5| %>
-						<li> <%= h5.text %></li>
-					<% end %>
-				</ul>
-				<% end %>
-			</div>
-		</div>
-	</div>
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<% unless @h6_array.empty? %>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven"><strong>H6's (<%= @h6_num %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
-				</a>
-		</div>
-		<div id="collapseSeven" class="accordion-body collapse">
-			<div class="accordion-inner">
-				<ul>
-					<% @h6_array.each do |h6| %>
-						<li> <%= h6.text %></li>
+					<% h_tags(1).each do |h1| %>
+						<li> <%= h1 %></li>
 					<% end %>
 				</ul>
 				<% end %>
