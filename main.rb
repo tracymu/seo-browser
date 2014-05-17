@@ -38,7 +38,7 @@ def meta_description
 end
 
 def links
-  @doc.css("a").map &:href
+  @doc.css("a").map #&:href
 end
 
 def domain_name(url)
@@ -51,15 +51,18 @@ def is_local(url)
 end
 
 def internal_links
-  links.select &:is_local
+  links.select #&:is_local
 end
 
 def external_links
-  links.reject &:is_local
+  links.reject #&:is_local
 end
 
 
 ###### NOTES AND QUESTIONS ####################
+
+# this is a lot slower now?!
+#All my "Except this, that tand the other" type of links is gone
 
 # @content = "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long"
 # Design Patterns for Sinatra apps- how to lay this out better - sinatra chassis
