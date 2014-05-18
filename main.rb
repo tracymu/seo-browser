@@ -58,6 +58,19 @@ def external_links
   links.reject #&:is_local
 end
 
+def collapse_level(n)
+  num_hash =
+  {
+    1 => "Two",
+    2 => "Three",
+    3 => "Four",
+    4 => "Five",
+    5 => "Six",
+    6 => "Seven",
+  }
+  num_hash[n]
+end
+
 
 ###### NOTES AND QUESTIONS ####################
 

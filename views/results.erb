@@ -68,10 +68,10 @@
 		<div class="accordion-group">
 			<div class="accordion-heading">
 				<% unless h_tags(n).empty? %>
-					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><strong>H<%= n %>'s (<%= h_tags(n).length %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%=collapse_level(n)%>"><strong>H<%= n %>'s (<%= h_tags(n).length %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
 					</a>
 			</div>
-			<div id="collapseTwo" class="accordion-body collapse">
+			<div id="collapse<%=collapse_level(n)%>" class="accordion-body collapse">
 				<div class="accordion-inner">
 					<ul>
 						<% h_tags(n).each do |h| %>
