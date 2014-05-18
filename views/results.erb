@@ -13,21 +13,13 @@
 	<a style = "color: #006621; font-size: 13px;font-style: normal;line-height: 16px; text-decoration: none;" href = "<%= @url %>"><%= @url %></a><br>
 	<span style="color: #545454; line-height: 1.4; font-size: small;
 	font-family: arial,sans-serif;" word-wrap: break-word; >
-	<% if meta_description %>
-		<%= meta_description[0..155] %>
-	<% else %>
-		This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long.
-	<% end %>
+		<%= meta_description[0..155] || "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long." %>
 	</span></p>
 <hr>
 </div>
 <div>
 	<p><strong>Canonical Link: </strong>
-	<% if canonical_link %>
-		<%= canonical_link %>
-	<% else %>
-		There is no canonical link for this page
-	<% end %>
+	<%= canonical_link || "There is no canonical link for this page" %>
 	</p>
 </div>
 <hr>
@@ -58,13 +50,13 @@
 			<div class="accordion-inner">
 				<ul>
 					<% external_links.each do |link| %>
-						<li><%= link %></li>
+						<li><%= link['href'] %></li>
 					<% end %>
 				</ul>
 			</div>
 		</div>
 	</div>
-	<% for n in (1..6) %>
+	<% (1..6).each do |n| %>
 		<div class="accordion-group">
 			<div class="accordion-heading">
 				<% unless h_tags(n).empty? %>

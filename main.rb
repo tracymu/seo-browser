@@ -39,7 +39,7 @@ end
 
 def links
   @doc.css("a").map #&:href
-  # need ot also get rid of empty ones here.
+  # @doc.css("a").reject &:empty
 end
 
 def domain_name(url)
@@ -84,7 +84,6 @@ end
 ###### NOTES AND QUESTIONS ####################
 
 # this is a lot slower now?!
-#All my "Except this, that tand the other" type of links is gone
 
 # @content = "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long"
 # Design Patterns for Sinatra apps- how to lay this out better - sinatra chassis
