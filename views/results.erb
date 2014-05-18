@@ -1,24 +1,41 @@
 <p><strong>URL:</strong> <a href = "<%= @url %>"><%= @url %></a></p>
-<h4>How It Looks In Google</h4>
+<hr>
+<h5>How It Looks In Google</h5>
 <div style="width: 512px;">
 	<p><a style ="font-weight: bold;
-	font-style: normal; white-space: nowrap; font-size: medium;color: #1e0fbe; font-family:arial, sans-serif; text-decoration: none;" href="<%= @url %>"><%= meta_title[0..56] %>...</a><br>
+	font-style: normal; white-space: nowrap; font-size: medium;color: #1e0fbe; font-family:arial, sans-serif; text-decoration: none;" href="<%= @url %>">
+	<% if meta_title.length > 56 %>
+		<%= meta_title[0..56] %>...
+	<% else %>
+		<%= meta_title %>
+	<% end %>
+	</a><br>
 	<a style = "color: #006621; font-size: 13px;font-style: normal;line-height: 16px; text-decoration: none;" href = "<%= @url %>"><%= @url %></a><br>
 	<span style="color: #545454; line-height: 1.4; font-size: small;
 	font-family: arial,sans-serif;" word-wrap: break-word; >
 	<% if meta_description %>
 		<%= meta_description[0..155] %>
 	<% else %>
-		<%= "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long" %>
+		This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long.
 	<% end %>
 	</span></p>
+<hr>
 </div>
-<p><strong>Canonical Link: </strong> <%= canonical_link %></p>
+<div>
+	<p><strong>Canonical Link: </strong>
+	<% if canonical_link %>
+		<%= canonical_link %>
+	<% else %>
+		There is no canonical link for this page
+	<% end %>
+	</p>
+</div>
+<hr>
 <div class="accordion" id="accordion2">
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight">
-				<strong>Links on Page (<%= "FIVE HUNDRESD" %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
+				<strong>Links on Page (<%= links.size %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
 			</a>
 		</div>
 		<div id="collapseEight" class="accordion-body collapse">
@@ -34,7 +51,7 @@
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-				<strong>External links (<%= external_links %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
+				<strong>External links (<%= external_links.size %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
 			</a>
 		</div>
 		<div id="collapseOne" class="accordion-body collapse">
@@ -47,23 +64,27 @@
 			</div>
 		</div>
 	</div>
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<% unless h_tags(1).empty? %>
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><strong>H1's (<%= h_tags(1).length %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
-				</a>
-		</div>
-		<div id="collapseTwo" class="accordion-body collapse">
-			<div class="accordion-inner">
-				<ul>
-					<% h_tags(1).each do |h1| %>
-						<li> <%= h1 %></li>
+	<% for n in (1..6) %>
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<% unless h_tags(n).empty? %>
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><strong>H<%= n %>'s (<%= h_tags(n).length %>)<span class="glyphicon glyphicon-chevron-down"></span></strong>
+					</a>
+			</div>
+			<div id="collapseTwo" class="accordion-body collapse">
+				<div class="accordion-inner">
+					<ul>
+						<% h_tags(n).each do |h| %>
+							<li> <%= h %></li>
+						<% end %>
+					</ul>
 					<% end %>
-				</ul>
-				<% end %>
+				</div>
 			</div>
 		</div>
-	</div>
+	<% end %>
+
+
 </div>
 
 
