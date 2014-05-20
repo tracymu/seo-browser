@@ -38,8 +38,9 @@ def meta_description
 end
 
 def links
-  @doc.css("a").map #&:href
-  # @doc.css("a").reject &:empty
+  link_list = @doc.css("a")
+  # link_list = link_list.compact  #Some of the links were coming up not as strings, but as nil Class, so had to remove
+  link_list
 end
 
 def domain_name(url)
@@ -52,19 +53,26 @@ def is_local(url)
 end
 
 def external_links
-  #links.reject &:is_local
-  link_list = links.map { |link| link['href']}
-  link_list = link_list.compact
+  # link_list = links.map { |link| link['href']}
+  # link_list = link_list.compact
   external_links = []
-  link_list.each do |link|
-    if link.start_with? "http"
+  links.each do |link|
+    if link['href'].start_with? "http"
       external_links << link
     end
-    # if is_local(link['href'])
-    #   external_links << link
-    # end
   end
-  return external_links
+
+
+  # return external_links
+  # links.each do |link|
+  #   if link.start_with? "http"
+  #     @external_links << link
+  #   end
+  # end
+  # external_links = links
+  external_links.reject! { |link| is_local(link['href']) }
+  external_links
+
 end
 
 def collapse_level(n)
