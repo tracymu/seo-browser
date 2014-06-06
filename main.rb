@@ -38,7 +38,9 @@ def meta_description
 end
 
 def links
-  @doc.css("a").map &:href
+  link_list = @doc.css("a")
+  # link_list = link_list.compact  #Some of the links were coming up not as strings, but as nil Class, so had to remove
+  link_list
 end
 
 def domain_name(url)
@@ -50,16 +52,47 @@ def is_local(url)
   domain_name(url) == domain_name(@url)
 end
 
-def internal_links
-  links.select &:is_local
+def external_links
+  # link_list = links.map { |link| link['href']}
+  # link_list = link_list.compact
+  external_links = []
+  links.each do |link|
+    if link['href'].start_with? "http://www"
+      external_links << link
+    end
+  end
+
+
+  # return external_links
+  # links.each do |link|
+  #   if link.start_with? "http"
+  #     @external_links << link
+  #   end
+  # end
+  # external_links = links
+  external_links.reject! { |link| is_local(link['href']) }
+  external_links
+
 end
 
-def external_links
-  links.reject &:is_local
+def collapse_level(n)
+  num_hash =
+  {
+    1 => "Two",
+    2 => "Three",
+    3 => "Four",
+    4 => "Five",
+    5 => "Six",
+    6 => "Seven",
+  }
+  num_hash[n]
 end
 
 
 ###### NOTES AND QUESTIONS ####################
+# To run it you write shotgun main.rb
+
+# this is a lot slower now?!
 
 # @content = "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long"
 # Design Patterns for Sinatra apps- how to lay this out better - sinatra chassis
