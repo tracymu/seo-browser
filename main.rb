@@ -57,7 +57,7 @@ def external_links
   # link_list = link_list.compact
   external_links = []
   links.each do |link|
-    if link['href'].start_with? "http"
+    if link['href'].start_with? "http://www"
       external_links << link
     end
   end
@@ -90,6 +90,7 @@ end
 
 
 ###### NOTES AND QUESTIONS ####################
+# To run it you write shotgun main.rb
 
 # this is a lot slower now?!
 
