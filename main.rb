@@ -57,8 +57,10 @@ def external_links
   # link_list = link_list.compact
   external_links = []
   links.each do |link|
-    if link['href'].start_with? "http://www"
-      external_links << link
+    if link['href']
+      if link['href'].start_with? "http://www"
+        external_links << link
+      end
     end
   end
 
