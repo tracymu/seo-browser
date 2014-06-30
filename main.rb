@@ -33,8 +33,12 @@ def meta_title
 end
 
 def meta_description
-  meta_desc = @doc.at_css("meta[name='description']")
-  meta_desc['content'] if meta_desc
+  if @doc.at_css("meta[name='description']")
+    meta_desc = @doc.at_css("meta[name='description']")
+    meta_desc['content']
+  else
+    "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long"
+  end
 end
 
 def links
