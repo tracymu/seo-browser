@@ -21,6 +21,10 @@
 	<p><strong>Canonical Link: </strong>
 		<%= canonical_link || "There is no canonical link for this page" %>
 	</p>
+	<p><strong>HTTP Header: </strong>
+		<%= http_header(@url) %>
+	</p>
+
 </div>
 <hr>
 <div class="accordion" id="accordion2">

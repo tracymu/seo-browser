@@ -2,6 +2,7 @@
 require 'Nokogiri'
 require 'open-uri'
 require 'sinatra'
+require 'net/http'
 
 get '/' do
   erb :home
@@ -40,6 +41,12 @@ def meta_description
     "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long"
   end
 end
+
+def http_header(url)
+  res = Net::HTTP.get_response(URI.parse(url.to_s))
+  res.code
+end
+
 
 def links
   link_list = @doc.css("a")
@@ -95,6 +102,8 @@ end
 
 ###### NOTES AND QUESTIONS ####################
 # To run it you write shotgun main.rb
+
+# add notes to http header e.g. if 301 puts "blah"
 
 # this is a lot slower now?!
 
