@@ -13,11 +13,7 @@
 	<a style = "color: #006621; font-size: 13px;font-style: normal;line-height: 16px; text-decoration: none;" href = "<%= @url %>"><%= @url %></a><br>
 	<span style="color: #545454; line-height: 1.4; font-size: small;
 	font-family: arial,sans-serif;" word-wrap: break-word; >
-		<%= if meta_description
-					meta_description[0..155]
-				else
-					"This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long."
-				end %>
+		<%= meta_description[0..155] %>
 	</span></p>
 <hr>
 </div>
@@ -25,6 +21,10 @@
 	<p><strong>Canonical Link: </strong>
 		<%= canonical_link || "There is no canonical link for this page" %>
 	</p>
+	<p><strong>HTTP Header: </strong>
+		<%= http_header(@url) %>
+	</p>
+
 </div>
 <hr>
 <div class="accordion" id="accordion2">
