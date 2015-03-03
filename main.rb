@@ -2,106 +2,114 @@
 require 'Nokogiri'
 require 'open-uri'
 require 'sinatra'
-require 'data_mapper'
-
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/main.db")
-
-class URL
-  include DataMapper::Resource
-  property :id, Serial
-  property :content, Text, :required => true
-  property :created_at, DateTime
-  property :updated_at, DateTime
-end
-
-DataMapper.finalize.auto_upgrade!
+require 'net/http'
 
 get '/' do
-  @urls = URL.all
   erb :home
 end
 
-post '/' do
-  url = URL.new
-  url.content = params[:content]
-  url.created_at = Time.now
-  url.updated_at = Time.now
-  url.save
-  redirect '/results'
-end
-
-
-get '/results' do
-  @url=URL.last
-  UrlScrape()
+post '/results' do
+  @url = params[:url]
+  @doc = scrape_page(@url)
   erb:results
 end
 
+private
 
+def scrape_page(url)
+  Nokogiri::HTML(open(url))
+end
 
+def h_tags(n)
+  @doc.css("h#{n}").map &:text
+end
 
-def UrlScrape
-  doc = Nokogiri::HTML(open(@url.content))
-  @h1_array = doc.css('h1')
-  @h1_num = @h1_array.length
-  @h2_array = doc.css('h2')
-  @h2_num = @h2_array.length
-  @h3_array = doc.css('h3')
-  @h3_num = @h3_array.length
-  @h4_array = doc.css('h4')
-  @h4_num = @h4_array.length
-  @h5_array = doc.css('h5')
-  @h5_num = @h5_array.length
-  @h6_array = doc.css('h6')
-  @h6_num = @h6_array.length
+def canonical_link
+  canonical = @doc.at_css("link[rel='canonical']")
+  canonical['href'] if canonical
+end
 
+def meta_title
+  @doc.at_css("title").text
+end
 
-
-  if doc.at_css("link[rel='canonical']")
-    @canonical = doc.at_css("link[rel='canonical']")['href']
+def meta_description
+  if @doc.at_css("meta[name='description']")
+    meta_desc = @doc.at_css("meta[name='description']")
+    meta_desc['content']
   else
-    @canonical = "There is no canonical tag on this page"
+    "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long"
   end
+end
 
-  @title = doc.at_css("title").text
-
-  meta_desc = doc.css("meta[name='description']").first
-  if meta_desc
-    @content = meta_desc['content']
-  else
-    @content = "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long"
-  end
-
-  # @body = doc.css("body")
-  @links = doc.css("a")
-  @link_list = @links.map { |link| link['href']}
-  @total_links = @links.length
-
-  @domain = @url.content.sub(/^https?\:\/\//, '').sub(/^www./,'')
-
-  @external_links = []
-  @internal_links =[]
-
-  @link_list = @link_list.compact  #Some of the links were coming up not as strings, but as nil Class, so had to remove
-
-  @link_list.each do |link|
-    if link.include? @domain
-      @internal_links << link
-    elsif link.start_with? "http"
-      @external_links << link
-    end
-  end
-    @external_links.reject! { |link| link.empty? }
-    @total_external_links = @external_links.length
+def http_header(url)
+  res = Net::HTTP.get_response(URI.parse(url.to_s))
+  res.code
 end
 
 
+def links
+  link_list = @doc.css("a")
+  # link_list = link_list.compact  #Some of the links were coming up not as strings, but as nil Class, so had to remove
+  link_list
+end
+
+def domain_name(url)
+  uri = URI.parse(url)
+  uri.host
+end
+
+def is_local(url)
+  domain_name(url) == domain_name(@url)
+end
+
+def external_links
+  # link_list = links.map { |link| link['href']}
+  # link_list = link_list.compact
+  external_links = []
+  links.each do |link|
+    if link['href']
+      if link['href'].start_with? "http://www"
+        external_links << link
+      end
+    end
+  end
 
 
+  # return external_links
+  # links.each do |link|
+  #   if link.start_with? "http"
+  #     @external_links << link
+  #   end
+  # end
+  # external_links = links
+  external_links.reject! { |link| is_local(link['href']) }
+  external_links
+
+end
+
+def collapse_level(n)
+  num_hash =
+  {
+    1 => "Two",
+    2 => "Three",
+    3 => "Four",
+    4 => "Five",
+    5 => "Six",
+    6 => "Seven",
+  }
+  num_hash[n]
+end
 
 
 ###### NOTES AND QUESTIONS ####################
+# To run it you write shotgun main.rb
 
+# add notes to http header e.g. if 301 puts "blah"
+
+# this is a lot slower now?!
+
+# @content = "This page has no description, Google will choose what content to show from your page, and it will be up to approx 155 characters long"
 # Design Patterns for Sinatra apps- how to lay this out better - sinatra chassis
 
 # How to be able to press enteri nstead of  have to click submit
